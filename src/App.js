@@ -1,19 +1,20 @@
 // eslint-disable-next-line no-unused-vars
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useReducer} from 'react';
 import Pc from './pc.svg'
 import './App.css';
 
 function Quote({quote, loaded}) {
-  // console.log(quote)
+  console.log(quote)
   return (
     <div className="quote-block">
       <cite className="quote-text">{quote.text}</cite>
       <span className="quote-author">{
         !loaded 
         ? ""
-        : quote.author
-        ? quote.author
-        : "Anonymous"}</span>
+        : quote.author !== null
+          ? quote.author
+          : "Anonymous"}
+        </span>
     </div>
     )
 }
@@ -28,32 +29,54 @@ function Header({getRandomQuote}) {
 }
 
 function App() {
-  const [quotes, setQuotes] = useState([]);
-  const [quote, setQuote] = useState({text: "", author: ""});
-  const [loaded, setLoaded] = useState(false);
+  const [state, setState] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      quotes: [], 
+      quote: {text: "", author: ""},
+      loaded: false
+    }
+  );
+
+  // const [quotes, setQuotes] = useState([]);
+  // const [quote, setQuote] = useState({text: "", author: ""});
+  // const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetch('https://type.fit/api/quotes')
     .then(resp => resp.json())
-    .then(json => setQuotes(json))
+    // .then(json => setQuotes(json))
+    .then(json => setState({quotes: json}))
     return () => {
-      setQuotes([]);
-      setQuote("");
+      // setQuotes([]);
+      // setQuote("");
+      setState({
+        quotes: [], 
+        quote: ""
+      })
     }
   }, []);
 
   const getRandomQuote = () => {
-    let randomIdx = Math.floor(Math.random() * (quotes.length + 1));
-    setQuote(quotes[randomIdx])
-    !loaded && setLoaded(true)
+    let randomIdx = Math.floor(Math.random() * (state.quotes.length + 1));
+    // setQuote(quotes[randomIdx])
+    // !loaded && setLoaded(true)
+    setState({
+      quote: state.quotes[randomIdx],
+      loaded: true
+    })
   }
 
 
   return (
     <div className="App">
       <Header getRandomQuote={getRandomQuote}/>
+      <div className="pc_wrapper">
+        <Quote quote={state.quote} loaded={state.loaded} />
+        <img id="pcSvg" src={Pc} alt="pc"/>
 
-      <Quote quote={quote} loaded={loaded} />
+      </div>
+
 
       {/* <svg id="svgBg" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 700 700">
         <defs>
@@ -69,7 +92,6 @@ function App() {
         </defs>
         <rect width="700" height="700" fill="url(#ffflux-gradient)" filter="url(#ffflux-filter)"></rect>
       </svg> */}
-      <img id="pcSvg" src={Pc} alt="pc"/>
     </div>
   );
 }
