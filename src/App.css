@@ -24,8 +24,56 @@
   margin: 2em;
 }
 
+.pc_wrapper {
+  position: relative;
+  min-height: 351px;
+  max-width: 354px;
+  margin-inline: auto;
+  /* border: 2px solid red; */
+}
+
+.quote-block {
+  position: absolute;
+  width: calc(100% - 8rem);
+  height: 150px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 1rem;
+  z-index: 5;
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-family: monospace;
+  color: rgb(47, 224, 12);
+  text-align: left;
+}
+
+@media screen and (max-width: 500px) {
+  .quote-block {
+    font-size: .9rem;
+    height: calc(50px + 20vw);
+    width: calc(100% - 30vw);
+  }
+}
+
+.quote-text {
+  overflow-y: auto;
+}
+
+.quote-author {
+  color: #fff;
+  justify-self: end;
+  align-self: end;
+}
+
 #pcSvg {
+  position: absolute;
   max-width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 
