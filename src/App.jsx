@@ -1,32 +1,9 @@
 // eslint-disable-next-line no-unused-vars
-import {useState, useEffect, useReducer} from 'react';
+import { useEffect, useReducer } from 'react';
+import Header from './components/header/Header';
+import Quote from './components/quote/Quote';
 import Pc from './pc.svg'
 import './App.css';
-
-function Quote({quote, loaded}) {
-  console.log(quote)
-  return (
-    <div className="quote-block">
-      <cite className="quote-text">{quote.text}</cite>
-      <span className="quote-author">{
-        !loaded 
-        ? ""
-        : quote.author !== null
-          ? quote.author
-          : "Anonymous"}
-        </span>
-    </div>
-    )
-}
-
-function Header({getRandomQuote}) {
-  return (
-    <header className="App-header">
-        <p>Random Quotes</p>
-        <button onClick={getRandomQuote}>get quote</button>
-      </header>
-  )
-}
 
 function App() {
   const [state, setState] = useReducer(
@@ -37,10 +14,6 @@ function App() {
       loaded: false
     }
   );
-
-  // const [quotes, setQuotes] = useState([]);
-  // const [quote, setQuote] = useState({text: "", author: ""});
-  // const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetch('https://type.fit/api/quotes')
@@ -59,8 +32,6 @@ function App() {
 
   const getRandomQuote = () => {
     let randomIdx = Math.floor(Math.random() * (state.quotes.length + 1));
-    // setQuote(quotes[randomIdx])
-    // !loaded && setLoaded(true)
     setState({
       quote: state.quotes[randomIdx],
       loaded: true
@@ -74,7 +45,7 @@ function App() {
       <div className="pc_wrapper">
         <Quote quote={state.quote} loaded={state.loaded} />
         <img id="pcSvg" src={Pc} alt="pc"/>
-
+        <button onClick={getRandomQuote}>get quote</button>
       </div>
 
 

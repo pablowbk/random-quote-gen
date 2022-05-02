@@ -8,10 +8,6 @@
 #svgBg {
   position:absolute;
   z-index: -1;
-  /* top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0; */
   height: 100%;
   width: 100%;
 }
@@ -29,7 +25,6 @@
   min-height: 351px;
   max-width: 354px;
   margin-inline: auto;
-  /* border: 2px solid red; */
 }
 
 .quote-block {
@@ -74,6 +69,23 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.pc_wrapper button {
+  position: absolute;
+  z-index: 5;
+  bottom: 7%;
+  right: 6%;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background-color: #b12e2e;
+  color: #fff;
+}
+
+@media (max-width: 420px) {
+  .pc_wrapper button {
+    bottom: calc(calc(50vw  / 2) + 10px)
+  }
 }
 
 
