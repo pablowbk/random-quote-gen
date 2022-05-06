@@ -23,7 +23,8 @@
 .pc_wrapper {
   position: relative;
   min-height: 351px;
-  max-width: 354px;
+  /* max-width: 354px; */
+  min-height: 270px;
   margin-inline: auto;
 }
 
@@ -74,7 +75,8 @@
 .pc_wrapper button {
   position: absolute;
   z-index: 5;
-  bottom: 7%;
+  /* bottom: 7%; */
+  bottom: 0;
   right: 6%;
   padding: 6px 10px;
   border-radius: 5px;
@@ -84,7 +86,7 @@
 
 @media (max-width: 420px) {
   .pc_wrapper button {
-    bottom: calc(calc(50vw  / 2) + 10px)
+    bottom: 10%;
   }
 }
 
